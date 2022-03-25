@@ -86,9 +86,20 @@ superheroesV2Router.get('/:superheroId', async (req, res) => {
 
 superheroesV2Router.put('/:superheroId', async (req, res) => {
   const { superheroId } = req.params;
-  const { name, lastname, dni, address = { city, code_zip, geo } } = req.body;
+  const {
+    superhero,
+    real_name,
+    feature = { universe, super_powers },
+    superhero_sidekick = { sidekick, side_powers },
+  } = req.body;
   await service
-    .editSuperhero(superheroId, name, lastname, dni, address)
+    .editSuperhero(
+      superheroId,
+      superhero,
+      real_name,
+      feature,
+      superhero_sidekick
+    )
     .then((data) => res.status(200).json(data))
     .catch((err) => res.status(304).json({ message: err }));
 });
